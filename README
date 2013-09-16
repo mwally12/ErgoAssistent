@@ -1,1 +1,83 @@
-Proyecto 1 Laboratorio de Programacion
+Instalar Qt en ubuntu
+http://www.wikihow.com/Install-Qt-SDK-on-Ubuntu-Linux
+
+Importante informacion sobre detectar eventos desde c++:
+http://danteslab.blogspot.com/2011/11/keylogger-en-linux.html
+
+Detectar eventos en el teclado:
+sudo cat /dev/input/event8
+
+Ahi se va a ver que se modifica el archivo con caracteres extra;os. La idea para analizarlo es abrir este archivo desde c++ y analizar la frecuencia con que este cambia
+
+Detectar eventos del mouse externo:
+sudo cat /dev/input/event9
+
+sudo g++ -I/usr/include/cppconn -o ErgoAssistent ErgoAssistent.cpp -L/usr/lib -lmysqlcppconn -g
+./ErgoAssistent -s "ergoAssist -d -nogui"
+
+g++ mouse.cpp -o mouse -lpthread
+sudo ./mouse
+
+Simple Thread in c++
+http://stackoverflow.com/questions/1135964/simple-pthread-c
+
+
+
+To do
+
+Dejar un programa base que corra en el back ground (Luis)
+Programa que lea eventos del teclado y mouse externo (Wally)
+Definir el formato para guardar en la base de datos (Wally)
+Crear la estructura de la base de datos (Luis)
+Configurar Qt para graficar y accesar mySQL (Ambos)
+Opcional: configurar Git (AR wally mandar documentacion)
+Opcional: doxygen (AR Luis poner como usar doxygen)
+
+Ver si se usa QCustomPlot para graficar
+
+
+UPDATE: 13/09
+
+act_window.cpp: prueba que imprime la ventana activa durante un for.
+mouse.cpp: solo modifique los DEFINES paa que apunten a los punteros respectivos. Pruebelo a ver si le sirve! A mi siempre me detecta el mouse externo pero el touchpad no.
+
+Repositorio de git listo:
+https://github.com/mwally12/ErgoAssistant
+
+Documentacion y tutoriales de Git:
+http://try.github.io/levels/1/challenges/1
+http://git-scm.com/book/en/Getting-Started
+https://help.github.com/
+Creo que con eso uno ya se la juega! Yo igual apenas estoy agarrandole el toque a la vara pero me parece que es super practico y util en proyectos asi. Igual mantengamos las versiones en Dropbox tambien, hasta ya manejar git y github de una mejor manera.
+
+http://blogs.ifsworld.com/2012/05/why-github-rocks/
+http://www.wired.com/opinion/2013/03/github/
+
+/*************************************14-09***********************************************/
+Ya todo esta unido en un solo programa, estos son los pasos para correrlo:
+
+En la terminal: mysql -u root -p 
+Poner la contrase;a que tenga de mysql
+
+En mysql> CREATE DATABASE proyecto1;
+En mysql> USE proyecto1;
+En mysql> CREATE TABLE example (TIEMPO INT NOT NULL, TIPO VARCHAR(100) NOT NULL, VENTANA VARCHAR(100) NOT NULL);
+
+En el archivo de ErgoAssistent.cpp cambiar esto a como lo tenga:
+
+#define EXAMPLE_HOST "localhost"
+#define EXAMPLE_USER "root"
+#define EXAMPLE_PASS "password"
+#define EXAMPLE_DB "proyecto1"
+
+Luego: 
+sudo g++ -I/usr/include/cppconn -o ErgoAssistent ErgoAssistent.cpp -L/usr/lib -lmysqlcppconn -g -lpthread
+sudo ./ErgoAssistent -s "ergoAssist -d -nogui"
+
+Luego: ver la magia :
+
+En mysql: SELECT * FROM example;
+
+Ahi van tres columnas, en la primero meti el atributo time del evento, luego si es teclado o mouse y luego la ventana en la que se hizo.
+El programa queda ejecutandose en back ground y la tabla de mysql se actualiza en tiempo real
+/*****************************************************************************************/
