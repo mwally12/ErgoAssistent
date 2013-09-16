@@ -81,3 +81,5 @@ En mysql: SELECT * FROM example;
 Ahi van tres columnas, en la primero meti el atributo time del evento, luego si es teclado o mouse y luego la ventana en la que se hizo.
 El programa queda ejecutandose en back ground y la tabla de mysql se actualiza en tiempo real
 /*****************************************************************************************/
+
+FASE 1 TERMINADA
